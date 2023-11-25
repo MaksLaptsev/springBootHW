@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-person-channels
+      author: Maks
+      changes:
+        - createTable:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: channel_id
+                  type: bigint
+                  constraints:
+                    nullable: false

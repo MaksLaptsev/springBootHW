@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-channel
+      author: Maks
+      changes:
+        - createTable:
+            tableName: channel
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: createddate
+                  type: timestamp
+              - column:
+                  name: shortdescription
+                  type: varchar(350)
+              - column:
+                  name: language
+                  type: varchar(30)
+              - column:
+                  name: category
+                  type: varchar(30)
+              - column:
+                  name: channel_owner_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: person_channel_fk
+                    referencedTableName: person
+                    referencedColumnNames: id
