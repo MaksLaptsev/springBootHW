@@ -22,6 +22,9 @@ public class Channel {
     private String language;
     private String category;
     @ManyToOne
+    @JoinTable(name = "person_channels",
+                joinColumns = @JoinColumn(name = "channel_id"),
+                inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Person channelOwner;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "channel_subscribers",

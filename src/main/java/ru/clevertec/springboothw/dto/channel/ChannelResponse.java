@@ -11,6 +11,7 @@ import java.util.Objects;
 public record ChannelResponse(Long id,
                               String name,
                               String language,
-                              String category) {
+                              String category,
+                              Integer numberOfSubscribers) {
 
 }

@@ -7,25 +7,24 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
 import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
-import ru.clevertec.springboothw.dto.channel.ChannelResponseOnlyNames;
+import ru.clevertec.springboothw.exception.ChannelNotFoundException;
+import ru.clevertec.springboothw.exception.PersonNotFoundException;
 import ru.clevertec.springboothw.mapper.ChannelListMapper;
 import ru.clevertec.springboothw.mapper.ChannelMapper;
-import ru.clevertec.springboothw.model.Channel;
 import ru.clevertec.springboothw.repository.ChannelRepository;
 import ru.clevertec.springboothw.repository.UserRepository;
 import ru.clevertec.springboothw.service.ChannelService;
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 @Transactional
 public class ChannelServiceImpl implements ChannelService {
-    private UserRepository userRepository;
-    private ChannelRepository channelRepository;
-    private ChannelMapper channelMapper;
-    private ChannelListMapper channelListMapper;
+    private final UserRepository userRepository;
+    private final ChannelRepository channelRepository;
+    private final ChannelMapper channelMapper;
+    private final ChannelListMapper channelListMapper;
 
     @Autowired
     public ChannelServiceImpl(UserRepository userRepository, ChannelRepository channelRepository,
@@ -38,38 +37,71 @@ public class ChannelServiceImpl implements ChannelService {
 
     @Override
     public List<ChannelResponse> findAllByNameContainingIgnoreCase(String name, Pageable pageable) {
-        return channelListMapper.toResponse(channelRepository.findAllByNameContainingIgnoreCase(name,pageable));
+        return channelListMapper
+                .toResponse(channelRepository.findAllByNameContainingIgnoreCase(name,pageable));
     }
 
     @Override
     public List<ChannelResponse> findAllByLanguageContainingIgnoreCase(String language, Pageable pageable) {
-        return channelListMapper.toResponse(channelRepository.findAllByNameContainingIgnoreCase(language,pageable));
+        return channelListMapper
+                .toResponse(channelRepository.findAllByLanguageContainingIgnoreCase(language,pageable));
     }
 
     @Override
     public List<ChannelResponse> findAllByCategoryContainingIgnoreCase(String category, Pageable pageable) {
-        return channelListMapper.toResponse(channelRepository.findAllByNameContainingIgnoreCase(category,pageable));
+        return channelListMapper
+                .toResponse(channelRepository.findAllByCategoryContainingIgnoreCase(category,pageable));
     }
 
     @Override
     public ChannelResponseFull findById(Long id) {
-        return channelMapper.toResponse(channelRepository.findById(id).orElseThrow(()->new RuntimeException()), 1L);
+        return channelRepository.findById(id)
+                .map(channelMapper::toResponseFull)
+                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(id)));
     }
 
     @Override
-    public ChannelResponseFull save(ChannelRequest channelRequest) {
-        return channelMapper.toResponse(channelRepository.saveAndFlush(channelMapper.fromRequest(channelRequest).setCreatedDate(LocalDateTime.now())),1L);
+    public ChannelResponseFull save(ChannelRequest channelRequest,Long authorId) {
+        return channelMapper.toResponseFull(channelRepository.saveAndFlush(channelMapper
+                        .fromRequest(channelRequest)
+                        .setCreatedDate(LocalDateTime.now())
+                        .setChannelOwner(userRepository.getUserById(authorId)
+                                .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found"
+                                        .formatted(authorId))))));
     }
 
     @Override
-    public ChannelResponseFull update(Long id, ChannelRequest channelRequest) {
-        return null;
+    public ChannelResponseFull update(ChannelRequest request, Long channelId) {
+        return channelRepository.findById(channelId)
+                .map(ch-> channelMapper.updateFromRequest(request,ch))
+                .map(channelRepository::saveAndFlush)
+                .map(channelMapper::toResponseFull)
+                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 
     @Override
-    public ChannelResponseOnlyNames findAllByUserId(Long id) {
-        return null;
+    public ChannelResponse subscribeToChannel(Long channelId, Long personId) {
+        return channelRepository.findById(channelId)
+                .map(x-> {
+                    x.getSubscribers().add(userRepository.getUserById(personId)
+                            .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found"
+                                    .formatted(personId))));
+                    return x;
+                })
+                .map(channelMapper::toResponse)
+                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 
-
+    @Override
+    public ChannelResponse unSubscribeFromChannel(Long channelId, Long personId) {
+        return channelRepository.findById(channelId)
+                .map(x-> {
+                    x.getSubscribers().remove(userRepository.getUserById(personId)
+                            .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found"
+                                    .formatted(personId))));
+                    return x;
+                })
+                .map(channelMapper::toResponse)
+                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
+    }
 }
