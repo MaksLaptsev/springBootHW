@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Maks
+      changes:
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 1
+              - column:
+                  name: channel_id
+                  value: 1
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 2
+              - column:
+                  name: channel_id
+                  value: 2
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 3
+              - column:
+                  name: channel_id
+                  value: 3
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 4
+              - column:
+                  name: channel_id
+                  value: 4
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 5
+              - column:
+                  name: channel_id
+                  value: 5
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 6
+              - column:
+                  name: channel_id
+                  value: 6
+        - insert:
+            tableName: person_channels
+            columns:
+              - column:
+                  name: person_id
+                  value: 7
+              - column:
+                  name: channel_id
+                  value: 7

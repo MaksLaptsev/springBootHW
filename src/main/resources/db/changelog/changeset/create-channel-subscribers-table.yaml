@@ -16,3 +16,7 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+        - addPrimaryKey:
+            tableName: channel_subscribers
+            columnNames: channel_id, person_id
+            deferrable:  true

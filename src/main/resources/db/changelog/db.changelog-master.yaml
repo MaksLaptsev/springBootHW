@@ -7,3 +7,11 @@ databaseChangeLog:
       file: db/changelog/changeset/create-channel-subscribers-table.yaml
   - include:
       file: db/changelog/changeset/create-person-channels-table.yaml
+  - include:
+      file: db/changelog/changeset/insert-into-person-table.yaml
+  - include:
+      file: db/changelog/changeset/insert-into-channel-table.yaml
+  - include:
+      file: db/changelog/changeset/insert-into-person_channels.yaml
+  - include:
+      file: db/changelog/changeset/insert-into-channel-subscribers.yaml

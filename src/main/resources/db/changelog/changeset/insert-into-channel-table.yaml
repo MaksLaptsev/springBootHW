@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Maks
+      changes:
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: TechInsights
+              - column:
+                  name: createddate
+                  value: 2018-09-12 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Exploring the latest in technology
+              - column:
+                  name: language
+                  value: English
+              - column:
+                  name: category
+                  value: Technology
+              - column:
+                  name: filename
+                  value: 1techInsights.jpg
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: TravelVibes
+              - column:
+                  name: createddate
+                  value: 2014-06-12 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Discovering amazing destinations
+              - column:
+                  name: language
+                  value: Russian
+              - column:
+                  name: category
+                  value: Travel
+              - column:
+                  name: filename
+                  value: 2travelVibes.jpg
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: CookingMasters
+              - column:
+                  name: createddate
+                  value: 2019-22-12 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Unleashing culinary creativity
+              - column:
+                  name: language
+                  value: Russian
+              - column:
+                  name: category
+                  value: Cooking
+              - column:
+                  name: filename
+                  value: 3cookingMasters.jpg
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: HealthHub
+              - column:
+                  name: createddate
+                  value: 2017-05-01 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Promoting well-being and healthy living
+              - column:
+                  name: language
+                  value: English
+              - column:
+                  name: category
+                  value: Health
+              - column:
+                  name: filename
+                  value: 4healthHub.png
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: GamingGalaxy
+              - column:
+                  name: createddate
+                  value: 2020-20-11 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Dive into the gaming universe
+              - column:
+                  name: language
+                  value: Multilingual
+              - column:
+                  name: category
+                  value: Gaming
+              - column:
+                  name: filename
+                  value: 5gamingGalaxy.png
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: ArtistryAvenue
+              - column:
+                  name: createddate
+                  value: 2018-15-02 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Celebrating creativity in all forms
+              - column:
+                  name: language
+                  value: Russian
+              - column:
+                  name: category
+                  value: Art
+              - column:
+                  name: filename
+                  value: 6artistryAvenue.png
+        - insert:
+            tableName: channel
+            columns:
+              - column:
+                  name: name
+                  value: FinanceFocus
+              - column:
+                  name: createddate
+                  value: 2022-20-08 21:11:57.084000
+              - column:
+                  name: shortdescription
+                  value: Navigating the world of finance
+              - column:
+                  name: language
+                  value: English
+              - column:
+                  name: category
+                  value: Finance
+              - column:
+                  name: filename
+                  value: 7financeFocus.jpg

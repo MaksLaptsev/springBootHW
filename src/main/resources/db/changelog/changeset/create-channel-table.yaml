@@ -30,10 +30,8 @@ databaseChangeLog:
               - column:
                   name: category
                   type: varchar(30)
-              - column:
-                  name: channel_owner_id
-                  type: bigint
                   constraints:
-                    foreignKeyName: person_channel_fk
-                    referencedTableName: person
-                    referencedColumnNames: id
+                    nullable: false
+              - column:
+                  name: filename
+                  type: varchar(30)

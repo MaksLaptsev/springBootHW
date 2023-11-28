@@ -12,6 +12,7 @@ public record ChannelResponseFull(Long id,
                                   String language,
                                   String category,
                                   String shortDescription,
+                                  String logoBase64,
                                   UserResponse channelOwner,
                                   Integer numberOfSubscribers) {
 }

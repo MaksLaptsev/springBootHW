@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Maks
+      changes:
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: SkyLark94
+              - column:
+                  name: name
+                  value: Alex
+              - column:
+                  name: email
+                  value: Skylark94@gmail.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: QuantumJazz
+              - column:
+                  name: name
+                  value: Olivia
+              - column:
+                  name: email
+                  value: QuantumJazz@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: CrimsonPulse
+              - column:
+                  name: name
+                  value: Damien
+              - column:
+                  name: email
+                  value: Crimson.Pulse@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: LunaVerse
+              - column:
+                  name: name
+                  value: Luna
+              - column:
+                  name: email
+                  value: LunaVerse@gmail.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: PhoenixRift
+              - column:
+                  name: name
+                  value: Ava
+              - column:
+                  name: email
+                  value: PhoenixRift@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: NebulaWhisper
+              - column:
+                  name: name
+                  value: Jasper
+              - column:
+                  name: email
+                  value: NebulaWhisper@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: AeroSphinx
+              - column:
+                  name: name
+                  value: Zoe
+              - column:
+                  name: email
+                  value: AeroSphinx@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: EtherealEcho
+              - column:
+                  name: name
+                  value: Ethan
+              - column:
+                  name: email
+                  value: Ethereal.Echo@email.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: BlazeHarmony
+              - column:
+                  name: name
+                  value: Maya
+              - column:
+                  name: email
+                  value: BlazeHarmony@gmail.com
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: nickname
+                  value: CipherVortex
+              - column:
+                  name: name
+                  value: Felix
+              - column:
+                  name: email
+                  value: Cipher.Vortex@email.com

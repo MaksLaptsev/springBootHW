@@ -3,18 +3,21 @@ package ru.clevertec.springboothw.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseOnlyNames;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
 import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.model.Channel;
+import ru.clevertec.springboothw.service.impl.FileService;
 
 @Mapper(componentModel = "spring")
 public interface ChannelMapper {
     @Mapping(target = "numberOfSubscribers",expression = "java(channel.getSubscribers().size())")
     ChannelResponse toResponse(Channel channel);
     @Mapping(target = "numberOfSubscribers",expression = "java(channel.getSubscribers().size())")
-    ChannelResponseFull toResponseFull(Channel channel);
+    @Mapping(target = "logoBase64",expression = "java(fileService.getFileFromStorageBase64(channel.getFileName()))")
+    ChannelResponseFull toResponseFull(Channel channel,FileService fileService);
     Channel fromRequest(ChannelRequest request);
     ChannelResponseOnlyNames toResponseOnlyNames(Channel channel);
     @Mapping(target = "id",source = "channel.id")

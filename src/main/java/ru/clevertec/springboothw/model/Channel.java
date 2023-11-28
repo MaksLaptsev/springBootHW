@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Accessors(chain = true)
@@ -21,6 +22,8 @@ public class Channel {
     private String shortDescription;
     private String language;
     private String category;
+    @Column(name = "filename")
+    private String fileName;
     @ManyToOne
     @JoinTable(name = "person_channels",
                 joinColumns = @JoinColumn(name = "channel_id"),
@@ -30,6 +33,6 @@ public class Channel {
     @JoinTable(name = "channel_subscribers",
                 joinColumns = @JoinColumn(name = "channel_id"),
                 inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> subscribers;
+    private Set<Person> subscribers;
 
 }

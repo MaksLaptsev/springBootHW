@@ -4,14 +4,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
 import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.service.ChannelService;
-import ru.clevertec.springboothw.service.impl.ChannelServiceImpl;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,16 +30,18 @@ public class ChannelController {
 
     @PostMapping
     public ResponseEntity<ChannelResponseFull> save(@RequestParam @NotNull Long authorId,
-                                                    @RequestBody @Valid ChannelRequest request){
-        System.out.println(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(channelService.save(request,authorId));
+                                                    @RequestPart @Valid ChannelRequest request,
+                                                    @RequestPart MultipartFile file){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(channelService.save(request,authorId,file));
     }
 
     @PutMapping
     public ResponseEntity<ChannelResponseFull> update(@RequestParam @NotNull Long channelId,
-                                                    @RequestBody @Valid ChannelRequest request){
-        System.out.println(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(channelService.update(request,channelId));
+                                                      @RequestPart @Valid ChannelRequest request,
+                                                      @RequestPart MultipartFile file){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(channelService.update(request,channelId,file));
     }
 
     @GetMapping({"/{id}"})
@@ -49,8 +53,7 @@ public class ChannelController {
     public ResponseEntity<List<ChannelResponse>> getWithFilter(@RequestParam(defaultValue = "") String name,
                                                                @RequestParam(defaultValue = "") String language,
                                                                @RequestParam(defaultValue = "") String category,
-                                                               Pageable pageable){
-
+                                                               @PageableDefault(sort = {"id"}) Pageable pageable){
         List<ChannelResponse> channelResponses = new ArrayList<>();
         if (!name.isEmpty()){
             channelResponses = channelService.findAllByNameContainingIgnoreCase(name,pageable);
@@ -75,7 +78,4 @@ public class ChannelController {
                                                                         @RequestParam @NotNull Long personId){
         return ResponseEntity.status(HttpStatus.OK).body(channelService.unSubscribeFromChannel(channelId,personId));
     }
-
-
-
 }
