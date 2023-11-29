@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = MultiPartFileValidator.class)
 public @interface ValidMediaType {
-    String value() default "image/png|image/jpg";
+    String value() default "image/png|image/jpg|image/jpeg";
 
     String message() default "Invalid type format: ${validatedValue.originalFilename}, use only {value}";
 
