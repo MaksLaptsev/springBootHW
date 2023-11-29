@@ -35,3 +35,10 @@ databaseChangeLog:
               - column:
                   name: filename
                   type: varchar(30)
+              - column:
+                  name: channel_owner_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: channel_owner_id_fk
+                    referencedTableName: person
+                    referencedColumnNames: id

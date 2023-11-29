@@ -7,17 +7,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
 import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.service.ChannelService;
-
-
+import ru.clevertec.springboothw.validation.multipartfile.ValidMediaType;
 import java.util.ArrayList;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/channel")
 public class ChannelController {
@@ -31,7 +32,7 @@ public class ChannelController {
     @PostMapping
     public ResponseEntity<ChannelResponseFull> save(@RequestParam @NotNull Long authorId,
                                                     @RequestPart @Valid ChannelRequest request,
-                                                    @RequestPart MultipartFile file){
+                                                    @RequestPart(required = false) @ValidMediaType MultipartFile file){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(channelService.save(request,authorId,file));
     }
@@ -39,7 +40,7 @@ public class ChannelController {
     @PutMapping
     public ResponseEntity<ChannelResponseFull> update(@RequestParam @NotNull Long channelId,
                                                       @RequestPart @Valid ChannelRequest request,
-                                                      @RequestPart MultipartFile file){
+                                                      @RequestPart(required = false) @ValidMediaType MultipartFile file){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(channelService.update(request,channelId,file));
     }

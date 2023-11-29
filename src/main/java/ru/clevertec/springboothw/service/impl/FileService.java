@@ -14,7 +14,7 @@ public class FileService {
     private final String defaultImagePath = defaultPath.concat("default.jpg");
     public String uploadFileAnGetFileName(Long channelId, MultipartFile file) {
 
-        if (!(file == null)){
+        if (file != null && !file.isEmpty()){
             try {
                 FileUtils.writeByteArrayToFile(new File(defaultPath+channelId+file.getOriginalFilename()),file.getBytes());
             }catch (IOException e){

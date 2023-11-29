@@ -1,7 +1,6 @@
 package ru.clevertec.springboothw.service;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
 import ru.clevertec.springboothw.dto.channel.ChannelResponse;

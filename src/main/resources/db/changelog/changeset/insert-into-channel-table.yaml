@@ -24,6 +24,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 1techInsights.jpg
+              - column:
+                  name: channel_owner_id
+                  value: 1
         - insert:
             tableName: channel
             columns:
@@ -45,6 +48,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 2travelVibes.jpg
+              - column:
+                  name: channel_owner_id
+                  value: 2
         - insert:
             tableName: channel
             columns:
@@ -66,6 +72,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 3cookingMasters.jpg
+              - column:
+                  name: channel_owner_id
+                  value: 3
         - insert:
             tableName: channel
             columns:
@@ -87,6 +96,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 4healthHub.png
+              - column:
+                  name: channel_owner_id
+                  value: 4
         - insert:
             tableName: channel
             columns:
@@ -108,6 +120,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 5gamingGalaxy.png
+              - column:
+                  name: channel_owner_id
+                  value: 5
         - insert:
             tableName: channel
             columns:
@@ -129,6 +144,9 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 6artistryAvenue.png
+              - column:
+                  name: channel_owner_id
+                  value: 6
         - insert:
             tableName: channel
             columns:
@@ -150,3 +168,6 @@ databaseChangeLog:
               - column:
                   name: filename
                   value: 7financeFocus.jpg
+              - column:
+                  name: channel_owner_id
+                  value: 7

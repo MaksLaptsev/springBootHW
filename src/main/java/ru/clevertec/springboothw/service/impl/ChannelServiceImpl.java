@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
-
 @Service
 @Transactional
 public class ChannelServiceImpl implements ChannelService {

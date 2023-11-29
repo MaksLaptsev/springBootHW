@@ -1,10 +1,8 @@
 package ru.clevertec.springboothw.repository;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import ru.clevertec.springboothw.model.Channel;
-
 import java.util.List;
 import java.util.Optional;
 

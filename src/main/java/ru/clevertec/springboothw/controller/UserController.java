@@ -4,14 +4,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseOnlyNames;
 import ru.clevertec.springboothw.dto.user.UserRequest;
 import ru.clevertec.springboothw.dto.user.UserResponse;
-import ru.clevertec.springboothw.dto.user.UserRequestRecord;
 import ru.clevertec.springboothw.service.UserService;
-
 import java.util.List;
 
 @RestController
@@ -25,7 +22,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest request){
-        System.out.println(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(request));
     }
 

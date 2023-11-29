@@ -2,8 +2,6 @@ package ru.clevertec.springboothw.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseOnlyNames;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
