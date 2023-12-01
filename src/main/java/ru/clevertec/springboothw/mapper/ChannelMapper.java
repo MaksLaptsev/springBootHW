@@ -1,7 +1,7 @@
 package ru.clevertec.springboothw.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseOnlyNames;
 import ru.clevertec.springboothw.dto.channel.ChannelRequest;
@@ -9,15 +9,21 @@ import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.model.Channel;
 import ru.clevertec.springboothw.service.impl.FileService;
 
-@Mapper(componentModel = "spring")
-public interface ChannelMapper {
+@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public abstract class ChannelMapper {
+
+    protected FileService fileservice;
+
     @Mapping(target = "numberOfSubscribers",expression = "java(channel.getSubscribers().size())")
-    ChannelResponse toResponse(Channel channel);
+    @Mapping(target = "logoBase64",expression = "java(fileservice.getFileFromStorageBase64(channel.getFileName()))")
+    public abstract ChannelResponse toResponse(Channel channel);
+
+
     @Mapping(target = "numberOfSubscribers",expression = "java(channel.getSubscribers().size())")
-    @Mapping(target = "logoBase64",expression = "java(fileService.getFileFromStorageBase64(channel.getFileName()))")
-    ChannelResponseFull toResponseFull(Channel channel,FileService fileService);
-    Channel fromRequest(ChannelRequest request);
-    ChannelResponseOnlyNames toResponseOnlyNames(Channel channel);
+    @Mapping(target = "logoBase64",expression = "java(fileservice.getFileFromStorageBase64(channel.getFileName()))")
+    public abstract ChannelResponseFull toResponseFull(Channel channel);
+    public abstract Channel fromRequest(ChannelRequest request);
+    abstract ChannelResponseOnlyNames toResponseOnlyNames(Channel channel);
     @Mapping(target = "id",source = "channel.id")
     @Mapping(target = "createdDate",source = "channel.createdDate")
     @Mapping(target = "channelOwner",source = "channel.channelOwner")
@@ -26,6 +32,10 @@ public interface ChannelMapper {
     @Mapping(target = "shortDescription",source = "request.shortDescription")
     @Mapping(target = "language",source = "request.language")
     @Mapping(target = "category",source = "request.category")
-    Channel updateFromRequest(ChannelRequest request,Channel channel);
+    public abstract Channel updateFromRequest(ChannelRequest request, Channel channel);
 
+    @Autowired
+    public void setBean(FileService fileservice){
+        this.fileservice = fileservice;
+        }
 }

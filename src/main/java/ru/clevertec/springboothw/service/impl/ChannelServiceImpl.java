@@ -49,7 +49,7 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public ChannelResponseFull findById(Long id) {
         return channelRepository.findById(id)
-                .map(ch->channelMapper.toResponseFull(ch,fileService))
+                .map(channelMapper::toResponseFull)
                 .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(id)));
     }
 
@@ -66,7 +66,7 @@ public class ChannelServiceImpl implements ChannelService {
         System.out.println(channel.getSubscribers());
         return channelMapper
                 .toResponseFull(channelRepository.saveAndFlush(channel.setFileName(fileService
-                                .uploadFileAnGetFileName(channel.getId(),file))), fileService);
+                                .uploadFileAnGetFileName(channel.getId(),file))));
 
 
     }
@@ -77,7 +77,7 @@ public class ChannelServiceImpl implements ChannelService {
                 .map(ch-> channelMapper.updateFromRequest(request,ch))
                 .map(ch-> ch.setFileName(fileService.uploadFileAnGetFileName(ch.getId(),file)))
                 .map(channelRepository::saveAndFlush)
-                .map(ch-> channelMapper.toResponseFull(ch,fileService))
+                .map(channelMapper::toResponseFull)
                 .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 

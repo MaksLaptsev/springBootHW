@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", uses = ChannelMapper.class)
 public interface ChannelListMapper {
+
     List<ChannelResponse> toResponse(List<Channel> channels);
     List<ChannelResponseOnlyNames> toResponseOnlyNames(List<Channel> channels);
 

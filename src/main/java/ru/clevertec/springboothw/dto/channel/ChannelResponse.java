@@ -4,6 +4,7 @@ public record ChannelResponse(Long id,
                               String name,
                               String language,
                               String category,
-                              Integer numberOfSubscribers) {
+                              Integer numberOfSubscribers,
+                              String logoBase64) {
 
 }
