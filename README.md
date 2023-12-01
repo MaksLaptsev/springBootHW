@@ -27,18 +27,21 @@
 - Отписка пользователя с канала
     [PUT http://localhost:8080/channel/unsubscribe?channelId=12&personId=2](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L68) , где channelId - id канала на с которого
                                                                             отписывается пользователь, personId - id пользователя
+- 7 Фильтр по названию, языку и категории + пагинация(опционально)
+     [GET http://localhost:8080/channel/filter?language=ru&name=trav&category=trav&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L72)  
 - 7.1 Фильтр по языку + пагинация(опционально)
-        [GET http://localhost:8080/channel/filter?language=rus&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L71) где language - небходимый для поиска язык (rus)
+        [GET http://localhost:8080/channel/filter?language=rus&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L74) где language - небходимый для поиска язык (rus)
 - 7.2 Фильтр по названию + пагинация(опционально)
-        [GET http://localhost:8080/channel/filter?name=jetix&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L74) где name - неоходимое для поиска название канала (tech)
+        [GET http://localhost:8080/channel/filter?name=jetix&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L76) где name - неоходимое для поиска название канала (tech)
 - 7.3 Фильтр по категории + пагинация(опционально)
-        [GET http://localhost:8080/channel/filter?category=hea&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L76) где category - необходимая для поиска категория канала (hea)
+        [GET http://localhost:8080/channel/filter?category=hea&page=0&size=2](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L78) где category - необходимая для поиска категория канала (hea)
     page - номер страницы(для пагинации), size - кол-во объектов для отображения на одной странице
 - Отображение списка всех подписок пользователя(без пагинации, отображаются только имена каналов)
-    [GET http://localhost:8080/user/subscriptions?personId=5](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L79) где personId - id пользователя
+    [GET http://localhost:8080/user/subscriptions?personId=5](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L81) где personId - id пользователя
 - Получение подробной информации об канале(название, категория, ид, дата создания, кол-во подписчиков, автор, язык)
-    [GET http://localhost:8080/channel/5](https://github.com/MaksLaptsev/springBootHW/blob/fd68c99fcdc274d7ada4119af4293348172989ed/src/main/resources/requests.http#L82)  где 5 - id канала
+    [GET http://localhost:8080/channel/5](https://github.com/MaksLaptsev/springBootHW/blob/53fe446341abae995fca75735679d88e688d1d65/src/main/resources/requests.http#L84)  где 5 - id канала
 
+  
 ## Описание сущностей:
 - Канал: имеет название, краткое описание, автора (среди зарегистрированных пользователей), неограниченное число подписчиков (тоже среди зарегистрированных пользователей), дату создания, один основной язык, аватарку(формат jpg/png, хранятся в папке logo), одну категорию
 - Пользователь
