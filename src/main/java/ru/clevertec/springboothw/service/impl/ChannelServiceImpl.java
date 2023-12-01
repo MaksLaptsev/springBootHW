@@ -40,21 +40,10 @@ public class ChannelServiceImpl implements ChannelService {
     }
 
     @Override
-    public List<ChannelResponse> findAllByNameContainingIgnoreCase(String name, Pageable pageable) {
+    public List<ChannelResponse> findAllByFilters(String name, String language, String category, Pageable pageable) {
         return channelListMapper
-                .toResponse(channelRepository.findAllByNameContainingIgnoreCase(name,pageable));
-    }
-
-    @Override
-    public List<ChannelResponse> findAllByLanguageContainingIgnoreCase(String language, Pageable pageable) {
-        return channelListMapper
-                .toResponse(channelRepository.findAllByLanguageContainingIgnoreCase(language,pageable));
-    }
-
-    @Override
-    public List<ChannelResponse> findAllByCategoryContainingIgnoreCase(String category, Pageable pageable) {
-        return channelListMapper
-                .toResponse(channelRepository.findAllByCategoryContainingIgnoreCase(category,pageable));
+                .toResponse(channelRepository
+                        .findAllByNameContainingIgnoreCaseAndLanguageContainingIgnoreCaseAndAndCategoryContainingIgnoreCase(name, language, category, pageable));
     }
 
     @Override

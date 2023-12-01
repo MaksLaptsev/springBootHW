@@ -23,9 +23,9 @@ POST http://localhost:8080/channel?authorId=5
 Content-Type: multipart/form-data; boundary=WebKitFormBoundary
 
 --WebKitFormBoundary
-#Content-Disposition: form-data; name="file"; filename="ufc.jpg"
-#Content-Type: image/jpeg
-#
+Content-Disposition: form-data; name="file"; filename="ufc.jpg"
+Content-Type: image/jpeg
+
 #(data)
 
 --WebKitFormBoundary
@@ -45,11 +45,11 @@ PUT http://localhost:8080/channel?channelId=6
 Content-Type: multipart/form-data; boundary=WebKitFormBoundary
 
 --WebKitFormBoundary
-#Content-Disposition: form-data; name="file"; filename="ufc.jpg"
-#Content-Type: image/jpeg
-#
-#(data)
+Content-Type: image/jpg
+Content-Disposition: form-data; name="file"; filename="ufc.jpg"
 
+
+(data)
 --WebKitFormBoundary
 Content-Disposition: form-data; name="request"
 Content-Type: application/json
@@ -69,6 +69,8 @@ PUT http://localhost:8080/channel/subscribe?channelId=7&personId=2
 PUT http://localhost:8080/channel/unsubscribe?channelId=7&personId=2
 
 ## 7. Отображение списка всех каналов с пагинацией и фильтрацией по языку/категории/названию
+### 7 Фильтр по названию, языку и категории + пагинация
+GET http://localhost:8080/channel/filter?language=ru&name=trav&category=trav&page=0&size=2
 ### 7.1 Фильтр по языку + пагинация(опционально)
 GET http://localhost:8080/channel/filter?language=rus&page=0&size=2
 ### 7.2 Фильтр по названию + пагинация(опционально)

@@ -15,7 +15,6 @@ import ru.clevertec.springboothw.dto.channel.ChannelResponse;
 import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import ru.clevertec.springboothw.service.ChannelService;
 import ru.clevertec.springboothw.validation.multipartfile.ValidMediaType;
-import java.util.ArrayList;
 import java.util.List;
 
 @Validated
@@ -55,17 +54,8 @@ public class ChannelController {
                                                                @RequestParam(defaultValue = "") String language,
                                                                @RequestParam(defaultValue = "") String category,
                                                                @PageableDefault(sort = {"id"}) Pageable pageable){
-        List<ChannelResponse> channelResponses = new ArrayList<>();
-        if (!name.isEmpty()){
-            channelResponses = channelService.findAllByNameContainingIgnoreCase(name,pageable);
-        } else if (!language.isEmpty()) {
-            channelResponses = channelService.findAllByLanguageContainingIgnoreCase(language,pageable);
-        } else if (!category.isEmpty()) {
-            channelResponses = channelService.findAllByCategoryContainingIgnoreCase(category, pageable);
-        }else {
-            throw new RuntimeException();
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(channelResponses);
+
+        return ResponseEntity.status(HttpStatus.OK).body(channelService.findAllByFilters(name, language, category, pageable));
     }
 
     @PutMapping({"/subscribe"})

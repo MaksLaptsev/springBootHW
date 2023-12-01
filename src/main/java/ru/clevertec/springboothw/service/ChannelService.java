@@ -8,11 +8,8 @@ import ru.clevertec.springboothw.dto.channel.ChannelResponseFull;
 import java.util.List;
 
 public interface ChannelService {
-    List<ChannelResponse> findAllByNameContainingIgnoreCase(String name, Pageable pageable);
-    List<ChannelResponse> findAllByLanguageContainingIgnoreCase(String language, Pageable pageable);
-    List<ChannelResponse> findAllByCategoryContainingIgnoreCase(String category, Pageable pageable);
+    List<ChannelResponse> findAllByFilters(String name, String language, String category, Pageable pageable);
     ChannelResponseFull findById(Long id);
-    //ChannelResponseFull save(ChannelRequest request,Long authorId);
     ChannelResponseFull save(ChannelRequest request, Long authorId, MultipartFile file);
     ChannelResponseFull update(ChannelRequest request,Long channelId,MultipartFile file);
     ChannelResponse subscribeToChannel(Long channelId,Long personId);
