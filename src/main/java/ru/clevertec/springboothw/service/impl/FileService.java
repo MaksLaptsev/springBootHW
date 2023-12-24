@@ -1,38 +1,30 @@
 package ru.clevertec.springboothw.service.impl;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
+
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Objects;
 
 @Component
 public class FileService {
-    private final String defaultPath = System.getProperty("user.dir").concat(File.separator).concat("logo")
-            .concat(File.separator);
-    private final String defaultImagePath = defaultPath.concat("default.jpg");
-    public String uploadFileAnGetFileName(Long channelId, MultipartFile file) {
+    public String uploadFileAndDecodeToBase64(MultipartFile file) {
 
-        if (file != null && !file.isEmpty()){
+        if (file != null && !file.isEmpty()) {
             try {
-                FileUtils.writeByteArrayToFile(new File(defaultPath+channelId+file.getOriginalFilename()),file.getBytes());
-            }catch (IOException e){
-                System.out.println(e.getMessage());
+                return Base64.getEncoder().encodeToString(file.getBytes());
+            } catch (IOException e) {
+                return getDefaultLogoFromResourcesBase64();
             }
-            return channelId+file.getOriginalFilename();
-        }else return "default.jpg";
+        } else return getDefaultLogoFromResourcesBase64();
     }
 
-    public String getFileFromStorageBase64(String fileName){
-
-        try{
-            String p = fileName == null ? defaultImagePath : defaultPath.concat(fileName);
-            byte[] fileContent = FileUtils.readFileToByteArray(new File(p));
-            return Base64.getEncoder().encodeToString(fileContent);
-        }catch (IOException e){
-            System.out.println(e.getMessage());
+    public String getDefaultLogoFromResourcesBase64() {
+        try {
+            return Base64.getEncoder().encodeToString(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("default.jpg")).readAllBytes());
+        } catch (IOException e) {
+            return "";
         }
-        return null;
     }
 }

@@ -13,5 +13,7 @@ public record ChannelRequest(@NotBlank
                              String language,
                              @NotBlank
                              @Size(max = 30)
-                             String category) {
+                             String category,
+
+                             Long authorId) {
 }

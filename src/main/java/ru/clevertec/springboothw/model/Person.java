@@ -3,6 +3,7 @@ package ru.clevertec.springboothw.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class Person {
     private String email;
     @ManyToMany(mappedBy = "subscribers")
     private List<Channel> channelsSubscribed;
-    @OneToMany(mappedBy="channelOwner",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "channelOwner", fetch = FetchType.LAZY)
     private List<Channel> ownChannels;
 
 }

@@ -1,6 +1,6 @@
 package ru.clevertec.springboothw.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,28 +16,20 @@ import ru.clevertec.springboothw.model.Channel;
 import ru.clevertec.springboothw.repository.ChannelRepository;
 import ru.clevertec.springboothw.repository.UserRepository;
 import ru.clevertec.springboothw.service.ChannelService;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ChannelServiceImpl implements ChannelService {
     private final UserRepository userRepository;
     private final ChannelRepository channelRepository;
     private final ChannelMapper channelMapper;
     private final ChannelListMapper channelListMapper;
     private final FileService fileService;
-
-    @Autowired
-    public ChannelServiceImpl(UserRepository userRepository, ChannelRepository channelRepository,
-                              ChannelMapper channelMapper, ChannelListMapper channelListMapper,FileService fileService) {
-        this.userRepository = userRepository;
-        this.channelRepository = channelRepository;
-        this.channelMapper = channelMapper;
-        this.channelListMapper = channelListMapper;
-        this.fileService = fileService;
-    }
 
     @Override
     public List<ChannelResponse> findAllByFilters(String name, String language, String category, Pageable pageable) {
@@ -50,23 +42,23 @@ public class ChannelServiceImpl implements ChannelService {
     public ChannelResponseFull findById(Long id) {
         return channelRepository.findById(id)
                 .map(channelMapper::toResponseFull)
-                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(id)));
+                .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(id)));
     }
 
     @Override
-    public ChannelResponseFull save(ChannelRequest channelRequest, Long authorId, MultipartFile file) {
+    public ChannelResponseFull save(ChannelRequest channelRequest, MultipartFile file) {
         Channel channel = channelRepository
-                .saveAndFlush(channelMapper
+                .save(channelMapper
                         .fromRequest(channelRequest)
                         .setCreatedDate(LocalDateTime.now())
                         .setSubscribers(new HashSet<>())
+                        .setLogo(fileService.uploadFileAndDecodeToBase64(file))
                         .setChannelOwner(userRepository
-                                .getUserById(authorId)
-                                .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found".formatted(authorId)))));
-        System.out.println(channel.getSubscribers());
+                                .getUserById(channelRequest.authorId())
+                                .orElseThrow(() -> new PersonNotFoundException("Person with id: %s not found".formatted(channelRequest.authorId())))));
+
         return channelMapper
-                .toResponseFull(channelRepository.saveAndFlush(channel.setFileName(fileService
-                                .uploadFileAnGetFileName(channel.getId(),file))));
+                .toResponseFull(channel);
 
 
     }
@@ -74,36 +66,36 @@ public class ChannelServiceImpl implements ChannelService {
     @Override
     public ChannelResponseFull update(ChannelRequest request, Long channelId, MultipartFile file) {
         return channelRepository.findById(channelId)
-                .map(ch-> channelMapper.updateFromRequest(request,ch))
-                .map(ch-> ch.setFileName(fileService.uploadFileAnGetFileName(ch.getId(),file)))
-                .map(channelRepository::saveAndFlush)
+                .map(ch -> channelMapper.updateFromRequest(request, ch))
+                .map(ch -> ch.setLogo(fileService.uploadFileAndDecodeToBase64(file)))
+                .map(channelRepository::save)
                 .map(channelMapper::toResponseFull)
-                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
+                .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 
     @Override
     public ChannelResponse subscribeToChannel(Long channelId, Long personId) {
         return channelRepository.findById(channelId)
-                .map(x-> {
+                .map(x -> {
                     x.getSubscribers().add(userRepository.getUserById(personId)
-                            .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found"
+                            .orElseThrow(() -> new PersonNotFoundException("Person with id: %s not found"
                                     .formatted(personId))));
                     return x;
                 })
                 .map(channelMapper::toResponse)
-                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
+                .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 
     @Override
     public ChannelResponse unSubscribeFromChannel(Long channelId, Long personId) {
         return channelRepository.findById(channelId)
-                .map(x-> {
+                .map(x -> {
                     x.getSubscribers().remove(userRepository.getUserById(personId)
-                            .orElseThrow(()-> new PersonNotFoundException("Person with id: %s not found"
+                            .orElseThrow(() -> new PersonNotFoundException("Person with id: %s not found"
                                     .formatted(personId))));
                     return x;
                 })
                 .map(channelMapper::toResponse)
-                .orElseThrow(()->new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
+                .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
 }
