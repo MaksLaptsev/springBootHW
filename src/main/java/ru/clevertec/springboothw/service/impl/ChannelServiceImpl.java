@@ -82,6 +82,7 @@ public class ChannelServiceImpl implements ChannelService {
                                     .formatted(personId))));
                     return x;
                 })
+                .map(channelRepository::save)
                 .map(channelMapper::toResponse)
                 .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
@@ -95,6 +96,7 @@ public class ChannelServiceImpl implements ChannelService {
                                     .formatted(personId))));
                     return x;
                 })
+                .map(channelRepository::save)
                 .map(channelMapper::toResponse)
                 .orElseThrow(() -> new ChannelNotFoundException("Channel with id: %s not found".formatted(channelId)));
     }
