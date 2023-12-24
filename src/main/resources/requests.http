@@ -73,7 +73,7 @@ DELETE http://localhost:8080/channels/7/subscriptions/2
 ### 7 Фильтр по названию, языку и категории + пагинация
 GET http://localhost:8080/channels?language=ru&name=trav&category=trav&page=0&size=2
 ### 7.1 Фильтр по языку + пагинация(опционально)
-GET http://localhost:8080/channels?language=rus&page=0&size=2
+GET http://localhost:8080/channels?language=eng&page=0&size=2
 ### 7.2 Фильтр по названию + пагинация(опционально)
 GET http://localhost:8080/channels?name=fin&page=0&size=2
 ### 7.3 Фильтр по категории + пагинация(опционально)

@@ -2,6 +2,7 @@ package ru.clevertec.springboothw.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
+import static ru.clevertec.springboothw.repository.specification.ChannelSpecification.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -35,7 +38,8 @@ public class ChannelServiceImpl implements ChannelService {
     public List<ChannelResponse> findAllByFilters(String name, String language, String category, Pageable pageable) {
         return channelListMapper
                 .toResponse(channelRepository
-                        .findAllByNameContainingIgnoreCaseAndLanguageContainingIgnoreCaseAndAndCategoryContainingIgnoreCase(name, language, category, pageable));
+                        .findAll(Specification.where(hasName(name)).and(hasLanguage(language)).and(hasCategory(category))
+                                , pageable).getContent());
     }
 
     @Override
